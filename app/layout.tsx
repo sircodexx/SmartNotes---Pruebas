@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="es" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/icon.svg" />
-      </head>
+        </head>
       <body className={inter.className} suppressHydrationWarning>
         {children}
       </body>
