@@ -21,7 +21,14 @@ export async function POST(request: NextRequest) {
     const hashedPassword = await hashPassword(password)
     const [result] = await db.execute(
       "INSERT INTO users (email, password, name, career, semester, university) VALUES (?, ?, ?, ?, ?, ?)",
-      [email, hashedPassword, name, career, semester, university],
+      [
+        email ?? null,
+        hashedPassword ?? null,
+        name ?? null,
+        career ?? null,
+        semester ?? null,
+        university ?? null,
+      ],
     )
 
     const userId = (result as any).insertId
