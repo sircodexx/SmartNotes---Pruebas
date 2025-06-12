@@ -12,7 +12,7 @@ export function GamificationPage() {
   const { tasks } = useTasks()
 
   const completedTasks = tasks.filter((task) => task.status === "completed")
-  const totalPoints = completedTasks.reduce((sum, task) => sum + task.points, 0)
+  const totalPoints = completedTasks.reduce((sum, task) => sum + (task.points_reward ?? 0), 0)
   const currentLevel = user?.level || 1
   const pointsForNextLevel = currentLevel * 1000
   const progressToNextLevel = (totalPoints % 1000) / 10
@@ -23,7 +23,7 @@ export function GamificationPage() {
       name: "Madrugador",
       description: "Completa 5 tareas antes de las 8 AM",
       icon: "🌅",
-      earned: user?.badges.includes("early-bird"),
+      earned: false,
       progress: 3,
       total: 5,
     },
@@ -32,7 +32,7 @@ export function GamificationPage() {
       name: "Maestro de Tareas",
       description: "Completa 50 tareas",
       icon: "🎯",
-      earned: user?.badges.includes("task-master"),
+      earned: false,
       progress: completedTasks.length,
       total: 50,
     },
@@ -41,7 +41,7 @@ export function GamificationPage() {
       name: "Racha Perfecta",
       description: "Mantén una racha de 7 días completando tareas",
       icon: "🔥",
-      earned: user?.badges.includes("streak-keeper"),
+      earned: false,
       progress: 5,
       total: 7,
     },
@@ -75,16 +75,17 @@ export function GamificationPage() {
   ]
 
   const weeklyStats = {
-    tasksCompleted: completedTasks.filter((task) => {
-      const taskDate = new Date(task.dueDate)
-      const weekAgo = new Date()
-      weekAgo.setDate(weekAgo.getDate() - 7)
-      return taskDate >= weekAgo
-    }).length,
-    pointsEarned: 450,
-    streak: 5,
-    averageTime: 2.5,
-  }
+  tasksCompleted: completedTasks.filter((task) => {
+    if (!task.due_date) return false
+    const taskDate = new Date(task.due_date)
+    const weekAgo = new Date()
+    weekAgo.setDate(weekAgo.getDate() - 7)
+    return taskDate >= weekAgo
+  }).length,
+  pointsEarned: 450,
+  streak: 5,
+  averageTime: 2.5,
+}
 
   const achievements = [
     {

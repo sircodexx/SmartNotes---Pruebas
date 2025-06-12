@@ -169,8 +169,8 @@ export function Dashboard({ onPageChange }: DashboardProps) {
                 <div className="text-sm text-green-700">Puntos Totales</div>
               </div>
               <div className="text-center p-3 bg-blue-50 rounded-lg">
-                <div className="text-2xl font-bold text-blue-600">{user?.achievements?.length ?? 0}</div>
-                <div className="text-sm text-blue-700">Insignias</div>
+                <div className="text-2xl font-bold text-blue-600">{user?.level ?? 0}</div>
+                <div className="text-sm text-blue-700">Nivel</div>
               </div>
             </div>
           </CardContent>

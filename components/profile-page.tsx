@@ -43,7 +43,7 @@ export function ProfilePage() {
   })
 
   const completedTasks = tasks.filter((task) => task.status === "completed")
-  const totalPoints = completedTasks.reduce((sum, task) => sum + (task.points ?? 0), 0)
+  const totalPoints = completedTasks.reduce((sum, task) => sum + (task.points_reward ?? 0), 0)
 
   const handleSaveProfile = () => {
     // Aquí se guardarían los cambios en el backend
@@ -57,7 +57,7 @@ export function ProfilePage() {
     completionRate: tasks.length > 0 ? Math.round((completedTasks.length / tasks.length) * 100) : 0,
     totalPoints: totalPoints,
     currentStreak: 5,
-    badges: user?.badges.length || 0,
+    badges: 0,
   }
 
   return (
