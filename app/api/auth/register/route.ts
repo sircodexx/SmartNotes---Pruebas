@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
     await db.execute("INSERT INTO user_settings (user_id) VALUES (?)", [userId])
 
     // Generar token JWT
-    const token = signToken({ userId, email, name })
+    //const token = signToken({ userId, email, name })
 
     const userData = {
       id: userId,
@@ -55,17 +55,16 @@ export async function POST(request: NextRequest) {
       success: true,
       message: "Usuario registrado exitosamente",
       user: userData,
-      token,
     })
 
     // Configurar cookie con el token
-    response.cookies.set("auth-token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60, // 7 días
-      path: "/",
-    })
+    //response.cookies.set("auth-token", token, {
+    //  httpOnly: true,
+    //  secure: process.env.NODE_ENV === "production",
+    //  sameSite: "strict",
+    //  maxAge: 7 * 24 * 60 * 60, // 7 días
+    //  path: "/",
+    //})
 
     console.log("Registration successful for:", email) // Debug log
 

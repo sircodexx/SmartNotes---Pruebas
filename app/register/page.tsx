@@ -33,14 +33,10 @@ export default function RegisterPage() {
   const [error, setError] = useState("")
   const [registerSuccess, setRegisterSuccess] = useState(false)
 
-  // Verificar si ya hay un token guardado
+
   useEffect(() => {
-    const token = localStorage.getItem("auth-token")
-    if (token) {
-      console.log("Token found in localStorage, redirecting to dashboard")
-      router.push("/dashboard")
-    }
-  }, [router])
+  localStorage.removeItem("auth-token")
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -75,7 +71,7 @@ export default function RegisterPage() {
           semester: Number.parseInt(formData.semester),
           university: formData.university,
         }),
-        credentials: "include", // Importante para las cookies
+        credentials: "include",
       })
 
       console.log("Register response status:", response.status) // Debug log
@@ -84,21 +80,11 @@ export default function RegisterPage() {
       console.log("Register response data:", data) // Debug log
 
       if (response.ok && data.success) {
-        console.log("Registration successful, redirecting...") // Debug log
-
-        // Guardar datos del usuario en localStorage como respaldo
-        if (typeof window !== "undefined") {
-          localStorage.setItem("user", JSON.stringify(data.user))
-          localStorage.setItem("auth-token", data.token)
-        }
-
         setRegisterSuccess(true)
-
-        // Esperar un momento para mostrar mensaje de éxito
+        // Esperar un momento para mostrar mensaje de éxito y redirigir al login
         setTimeout(() => {
-          // Forzar redirección
-          window.location.href = "/dashboard"
-        }, 500)
+          router.push("/login")
+        }, 1200)
       } else {
         console.log("Registration failed:", data.error) // Debug log
         setError(data.error || "Error al registrar usuario")
@@ -147,7 +133,7 @@ export default function RegisterPage() {
               {registerSuccess ? (
                 <Alert className="border-green-200 bg-green-50">
                   <AlertDescription className="text-green-800">
-                    ¡Registro exitoso! Redirigiendo al dashboard...
+                    ¡Registro exitoso! Redirigiendo al inicio de sesión...
                   </AlertDescription>
                 </Alert>
               ) : (
