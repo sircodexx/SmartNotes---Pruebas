@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "SmartNotes - Tu asistente académico",
   description: "Organiza tus tareas, mejora tu productividad y alcanza tus metas académicas",
-    generator: 'v0.dev'
+  generator: "v0.dev",
 }
 
 export default function RootLayout({
